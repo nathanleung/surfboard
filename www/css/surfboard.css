@@ -1,0 +1,90 @@
+[class*="icon-"] {
+font-family: 'twnicons';
+speak: none;
+font-style: normal;
+font-weight: normal;
+font-variant: normal;
+text-transform: none;
+line-height: 1;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-humidity:before{
+content: "\e62f";
+}
+.icon-pressure:before{
+content: "\e618";
+}
+.icon-pressure2:before{
+content: "\e650";
+}
+.pressure-icon{
+color: #000;
+font-size: 14px;
+top: 0;
+}
+.icon-visibility:before{
+content: "\e606";
+}
+.icon-sunrise:before{
+content: "\e60f";
+}
+.icon-sunset:before{
+content: "\e60d";
+}
+
+.detailed-reports i {
+color: #fff;
+filter: alpha(opacity=75);
+opacity: 0.75;
+position: absolute;
+top: 0;
+left: 4px;
+font-size: 42px;
+z-index:0;
+}
+
+.inline-number{
+width: 50px;
+/* font-family: 'DIN-Bold',sans-serif; */
+font-size: 14px;
+/* color: #185E94; */
+text-align: center;
+display: inline-block;
+position: relative;
+z-index: 1;
+}
+
+.inline-text{
+width: 50px;
+/* color: #333; */
+text-align: center;
+font-size: 9px;
+position: relative;
+z-index: 1;
+/* font-family: 'DIN-Bold',sans-serif; */
+}
+
+.lowspeed{
+	background:#36db3a;
+}
+.medspeed{
+	background:#fcd100;
+}
+
+.arrow{
+	width:5%;
+	color:black;
+}
+
+@font-face {
+    font-family: "twnicons";
+    src: url("./fonts/twnicons.woff") format("woff");   
+        /* Make sure you defined the correct path, which is related to
+            the location of your file `my_css.css` */ 
+    }
+    body {
+        font-family: "twnicons";
+        font-size:16px;
+    }

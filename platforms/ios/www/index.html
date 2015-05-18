@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <!-- <link rel="stylesheet" type="text/css" href="css/index.css" /> -->
+        <link rel="stylesheet" type="text/css" href="css/surfboard.css" />
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+        <title>Surfboard app</title>
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=geometry"></script>
+    </head>
+    <body class="scrollingArea" style="margin: 0; background-color:#EBFAFF;">
+	<!-- top weather info-->
+	<div style="margin: 5px 5px 5px 5px"><span id="h1_title" style="font-size: 38px; margin:5px;">Marine Forecast: Anse-Bleue, NB	</span></div>
+		<div class="detailed-reports" style="margin:5px;" >
+			<div><p style="margin:0px; height:50px;">
+			<span><img src="img/cloudy_snow.png" alt="weather_icon" height="50px"></span>
+			<span data-bind="text:temperature()" style="font-size: 45px;"></span>
+			<span style="vertical-align: top; margin-top: 15px;display:inline-block;">°C</span></p>
+			</div>
+			<div data-bind="text:'Feels like:'+feelsLike()+'&#176'+'C'"></div>
+			<br>
+			<div style="position: relative; width:50%; float: left;">
+				<div style="font-size:25px;">
+					<span data-bind="text:windDirection()"></span>
+					<span data-bind="text:windSpeed()"></span>
+				</div>
+				<div class="inline-text">Wind</div>
+			</div>
+			<div style="position: relative; width:25%; float: left;">
+				<div class="inline-number" data-bind="text:humidity()"></div>
+				
+				<div class="inline-text">Humidity</div>
+				<i class="icon-humidity"></i>
+			</div>
+			<div style="position: relative; width:25%; float: left;">
+				<div class="inline-number" data-bind="text:pressure()"></div>
+				<div class="inline-text">Pressure</div>
+				<i class="icon-pressure"></i>
+				<i class="pressure-icon;"></i>
+			</div>
+			<br style="clear:both;">
+			<div style="position: relative; width:33.33333%; float: left;">
+				<div class="inline-number" data-bind="text:visibility()"></div>
+				<div class="inline-text">Visibility</div>
+				<i class="icon-visibility"></i>
+			</div>
+			<div style="position: relative; width:33.33333%; float: left;">
+				<i class="icon-sunrise"></i>
+				<div class="inline-number" data-bind="text:sunrise()"></div>
+				<div class="inline-text">Sunrise</div>
+			</div>
+			<div style="position: relative; width:33.33333%; float: left;">
+				<div class="inline-number" data-bind="text:sunset()"></div>
+				<div class="inline-text">Sunset</div>
+				<i class="icon-sunset"></i>
+			</div>
+			<div style="clear:left"></div>
+		</div>
+		<br>
+		<!--google maps canvas-->
+		<div id="map-canvas" style="height: 250px; width: device-width;"></div>
+		<br style="clear:both">
+		<!--Wind Speed Table-->
+		<div id="myCarousel" class="carousel slide" data-interval="false" style="max-width:500px">
+		  <!-- Carousel items -->
+							<div id="rows" style="position: relative; width:15%; float: left; border-right:solid" >
+							<br>
+							<br>
+								<div>Wind <br>(Knots)</div>
+								<br>
+								<div>Wind <br> gust</div>
+								<br>
+								<div>Rain</div>
+								<br>
+								<div>P.O.P</div>
+								<div style="height:50px"></div>
+								<div>Temp</div>
+								<br>
+								<div> Feels <br> like</div>
+							</div>
+		  <div id="innercarousel" class="carousel-inner"  style="position: relative; width:80%; float: left; max-width:500px">
+			<div class="item active">
+							<div data-bind="template: { name: 'wind-template', foreach: windTable1 }"></div>
+						</div>
+			<div class="item" data-bind="template: { name: 'wind-template', foreach: windTable2 }"></div>
+			<div class="item" data-bind="template: { name: 'wind-template', foreach: windTable3 }"></div>
+			<div class="item" data-bind="template: { name: 'wind-template', foreach: windTable4 }"></div>
+		  </div>
+		  <!-- Carousel nav -->
+		  <a class="carousel-control left" style="color:black; width:5%;font-size: 40px;" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+		  <a class="carousel-control right" style="color:black; width:5%;font-size: 40px;" href="#myCarousel" data-slide="next">&rsaquo;</a>
+		</div>
+		<br style="clear:both">
+		<br>
+		<div id="container" style="min-width: 310px; height: 300px; max-width: 800px; margin: 0 auto"></div>
+		<script type="text/html" id="wind-template">
+		<!--wind table template-->
+		<div style="position: relative; width:25%; float: left; border-right: solid; text-align:center">
+			<div data-bind="text: date" >Thurs</div>
+			<div data-bind="text: time" ></div>
+			<br>
+			<div data-bind="text: windSpeed, css: color" >
+			</div>
+			<br> 
+			<div data-bind="text: windGust, css: $parent.colorWindGust(color) "></div>
+			<br>
+			<br>
+			<div data-bind="text: rain"></div>
+			<br>
+			<div data-bind="text: pop"></div>
+			<img src="img/cloudy_snow.png" alt="weathericon" height="50px" width='50px'>
+			<div data-bind="text: temp+'&#176'+'C'"></div>
+			<br>
+			<div data-bind="text: feelsLike"></div>
+			<br>
+		</div>
+	</script>
+        <script type="text/javascript" src="cordova.js"></script>
+		<script src="lib/jquery-1.11.1.min.js"></script>
+		<script src="lib/highcharts.js"></script>
+		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
+        <script type='text/javascript' src='lib/knockout-3.2.0.js'></script>
+		<script src="lib/hammer.2.0.4.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/mapmarkers.js"></script>
+        <script type="text/javascript" src='lightningmap/lightning.js'></script>
+        <script type="text/javascript" src='lightningmap/mqttws31.js'></script>
+    </body>
+</html>
